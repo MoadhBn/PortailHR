@@ -1,0 +1,27 @@
+
+<div class="modal">
+<div class="modal-content">
+    <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+    <button class="close" onclick="closeViewModal()">&times;</button>
+    {% set photoUrl = user.photo ? asset(user.photo) : 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop&crop=face' %}
+    <div class="user-photo-wrapper">
+        <img src="{{ photoUrl }}" alt="Photo de {{ user.firstName }} {{ user.lastName }}" class="employee-photo-large" onerror="this.src='https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop&crop=face'">
+    </div>
+    <p><strong>ID:</strong> {{ user.id }}</p>
+    <p><strong>Date de naissance:</strong> {{ user.dob ? user.dob|date('Y-m-d') : 'N/A' }}</p>
+    <p><strong>Poste:</strong> {{ user.post ?: 'N/A' }}</p>
+    <p><strong>Service:</strong> {{ user.service ?: 'N/A' }}</p>
+    <p><strong>Supérieur:</strong> {{ user.supervisor ?: 'N/A' }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Téléphone:</strong> {{ user.phone ?: 'N/A' }}</p>
+    <p><strong>Salaire:</strong> {{ user.salary ? user.salary ~ ' DT' : 'N/A' }}</p>
+   
+    
+    <span class="status {{ user.status|lower|replace({' ': '', 'é': 'e'}) }}">
+        {{ user.status ?: 'Actif' }}
+    </span>
+</div>
+</div>
+
+
+

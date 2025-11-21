@@ -1,0 +1,19 @@
+<div class="modal" id="deleteModal" style="display: none;">
+    <div class="modal-content">
+        <h2>Confirmer la suppression</h2>
+        <p id="deleteMessage"></p>
+
+        <form id="deleteForm" method="post" action="">
+            <input type="hidden" name="_token" id="deleteToken">
+
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                <button type="button" class="btn-cancel"
+                        onclick="closeDeleteModal()"
+                        style="background:rgba(41, 40, 40, 0.57); width: auto;">Annuler</button>
+
+                <button type="submit" class="btn-submit"
+                        style="background: #f44336; width: auto;">Supprimer</button>
+            </div>
+        </form>
+    </div>
+</div>

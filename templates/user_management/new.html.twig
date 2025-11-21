@@ -1,0 +1,74 @@
+<div class="modal" id="addModal"  style="display: none;">
+    <div class="modal-content">
+        <h2>Ajouter un employé</h2>
+        <button class="close" onclick="closeAddModal()">&times;</button>
+        {{ form_start(addForm, {'action': path('app_user_management_new'), 'attr': {'id': 'addForm'}}) }}
+            <div class="form-group">
+                {{ form_label(addForm.lastName) }}
+                {{ form_widget(addForm.lastName) }}
+                {{ form_errors(addForm.lastName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addForm.firstName) }}
+                {{ form_widget(addForm.firstName) }}
+                {{ form_errors(addForm.firstName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addForm.dob) }}
+                {{ form_widget(addForm.dob) }}
+                {{ form_errors(addForm.dob) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addForm.phone) }}
+                {{ form_widget(addForm.phone) }}
+                {{ form_errors(addForm.phone) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addForm.email) }}
+                {{ form_widget(addForm.email) }}
+                {{ form_errors(addForm.email) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addForm.post) }}
+                {{ form_widget(addForm.post) }}
+                {{ form_errors(addForm.post) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addForm.service) }}
+                {{ form_widget(addForm.service) }}
+                {{ form_errors(addForm.service) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addForm.supervisor) }}
+                {{ form_widget(addForm.supervisor) }}
+                {{ form_errors(addForm.supervisor) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addForm.salary) }}
+                {{ form_widget(addForm.salary) }}
+                {{ form_errors(addForm.salary) }}
+            </div>
+            <div class="form-group roles-group">
+                {{ form_label(addForm.roles) }}
+                {{ form_widget(addForm.roles, {'attr': {'class': 'roles-options'}}) }}
+                {{ form_errors(addForm.roles) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addForm.password) }}
+                {{ form_widget(addForm.password) }}
+                {{ form_errors(addForm.password) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addForm.status) }}
+                {{ form_widget(addForm.status) }}
+                {{ form_errors(addForm.status) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(addForm.photo) }}
+                {{ form_widget(addForm.photo) }}
+                {{ form_errors(addForm.photo) }}
+            </div>
+            <button type="submit" class="btn-submit">Créer</button>
+        {{ form_end(addForm) }}
+    </div>
+</div>

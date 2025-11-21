@@ -1,0 +1,76 @@
+<div class="modal">
+    <div class="modal-content" >
+    <h2>Modifier {{ user.firstName }} {{ user.lastName }}</h2>
+    <button class="close" onclick="closeEditModal()">&times;</button>
+    {{ form_start(form, {'action': path('app_user_management_edit', {'id': user.id}), 'attr': {'id': 'editForm'}}) }}
+        <div class="form-group">
+            {{ form_label(form.lastName) }}
+            {{ form_widget(form.lastName) }}
+            {{ form_errors(form.lastName) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.firstName) }}
+            {{ form_widget(form.firstName) }}
+            {{ form_errors(form.firstName) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.dob) }}
+            {{ form_widget(form.dob) }}
+            {{ form_errors(form.dob) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.phone) }}
+            {{ form_widget(form.phone) }}
+            {{ form_errors(form.phone) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.post) }}
+            {{ form_widget(form.post) }}
+            {{ form_errors(form.post) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.service) }}
+            {{ form_widget(form.service) }}
+            {{ form_errors(form.service) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.supervisor) }}
+            {{ form_widget(form.supervisor) }}
+            {{ form_errors(form.supervisor) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.salary) }}
+            {{ form_widget(form.salary) }}
+            {{ form_errors(form.salary) }}
+        </div>
+        <div class="form-group roles-group">
+            {{ form_label(form.roles) }}
+            {{ form_widget(form.roles, {'attr': {'class': 'roles-options'}}) }}
+            {{ form_errors(form.roles) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password, {'attr': {'placeholder': 'Laisser vide pour ne pas changer'}}) }}
+            {{ form_errors(form.password) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.status) }}
+            {{ form_widget(form.status) }}
+            {{ form_errors(form.status) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.photo) }}
+            {{ form_widget(form.photo) }}
+            {{ form_errors(form.photo) }}
+        </div>
+        <button type="submit" class="btn-submit">Mettre à jour</button>
+    {{ form_end(form) }}
+    </div>
+</div>
+
+

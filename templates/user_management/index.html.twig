@@ -1,0 +1,97 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Gestion des Employés{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/user-management.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="gestion-container">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-error">{{ message }}</div>
+    {% endfor %}
+
+    <div class="content-head">
+        <h1>Gestion des Employés</h1>
+        <button class="btn-add" onclick="openAddModal()">
+            <i class="fas fa-plus"></i> Ajouter
+        </button>
+    </div>
+
+    <div class="content-head">
+        <div class="search-contain">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" 
+                   placeholder="Rechercher un utilisateur..." 
+                   class="global-search1"
+                   id="searchInput"
+                   value="{{ search }}"
+                   onkeyup="filterEmployees()">
+        </div>
+    </div>
+
+    <div class="employees-grid" id="employeesGrid">
+        {% for user in users %}
+            <div class="employee-card" data-name="{{ (user.firstName ~ ' ' ~ user.lastName)|lower }}" data-email="{{ user.email|lower }}">
+                {% set photoUrl = user.photo ? asset(user.photo) : 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&fit=crop&crop=face' %}
+                <img src="{{ photoUrl }}" 
+                     alt="Photo" 
+                     class="employee-photo"
+                     onerror="this.src='https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&fit=crop&crop=face'">
+                <h3 class="empi">{{ user.firstName }} {{ user.lastName }}</h3>
+                <p class="post">{{ user.post ?: 'N/A' }} - {{ user.service ?: 'N/A' }}</p>
+                <span class="status {{ user.status|lower|replace({' ': '', 'é': 'e'}) }}">
+                    {{ user.status ?: 'Actif' }}
+                </span>
+                <div class="actions">
+                    <button onclick="viewEmployee({{ user.id }})" title="Voir">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button onclick="editEmployee({{ user.id }})" title="Modifier">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button onclick="deleteEmployee({{ user.id }}, '{{ (user.firstName ~ ' ' ~ user.lastName)|escape('js') }}', '{{ csrf_token('delete' ~ user.id) }}')" title="Supprimer">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        {% else %}
+            <div class="no-employees">
+                <p>Aucun employé trouvé.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- ADD MODAL -->
+{% include 'user_management/new.html.twig' %}
+
+<!-- VIEW MODAL -->
+<div class="modal"  id="viewModal" style="display: none;">
+    <div id="viewModalContent">
+        <!-- Content will be loaded via AJAX -->
+    </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal" id="editModal" style="display: none;">
+    <div class="modal-content" id="editModalContent">
+        <!-- Content will be loaded via AJAX -->
+    </div>
+</div>
+
+<!-- DELETE CONFIRMATION MODAL -->
+{% include 'user_management/_delete_form.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/user-management.js') }}"></script>
+{% endblock %}
+
