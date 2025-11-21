@@ -1,0 +1,49 @@
+<header class="header">
+  <div class="header-left">
+    <div class="logo">
+      <i class="fas fa-bars"></i>
+      <img src="{{ asset('images/logo.png') }}" alt="DenimLogo" class="logo-img">
+    </div>
+  </div>
+
+  <div class="header-center">
+    <div class="search-container">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" placeholder="Rechercher dans le portail..." class="global-search">
+    </div>
+  </div>
+
+  <div class="header-right">
+    <button class="notification-btn">
+      <i class="fas fa-bell"></i>
+      <span class="notification-badge">99+</span>
+    </button>
+
+    <div class="user-dropdown" onmouseleave="closeUserDropdown()">
+      <button class="user-btn" onclick="toggleUserDropdown(event)">
+        {% if app.user %}
+          <img src="{{app.user.photo}}" alt="Photo de {{ app.user.firstName }} {{ app.user.lastName }}"  onerror="this.src='https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop&crop=face'"  class="profile-img">
+          <span><strong>{{ app.user.firstName }}</strong></span>
+        {% else %}
+          <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&fit=crop&crop=face" 
+               alt="Profile" class="profile-img">
+          <span>User</span>
+        {% endif %}
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="dropdown-menu" id="userDropdownMenu">
+        <a href="#"><i class="fas fa-user"></i> Mon Profil</a>
+        <a href="#"><i class="fas fa-cog"></i> Paramètres</a>
+        <a href="#"><i class="fas fa-question-circle"></i> Aide</a>
+        <hr>
+        <form method="post" action="{{ path('app_logout') }}">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+          <button type="submit">
+            <i class="fas fa-sign-out-alt"></i> Déconnexion
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+

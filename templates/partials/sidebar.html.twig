@@ -1,0 +1,39 @@
+<!-- Side Navigation -->
+<nav class="sidebar">
+  <div class="sidebar-menu">
+    <div class="menu-section">
+      <ul class="first">
+        <li><a href="{{ path('app_home') }}"><i class="fas fa-home"></i><span>Acceuil</span></a></li>
+      </ul>
+      <ul>
+        <h3>Espace employées</h3>
+        <li><a href="{{ path('app_organigramme_index') }}"><i class="fas fa-sitemap"></i><span>Organigramme</span></a></li>
+        <li><a href="#departments"><i class="fas fa-user-clock"></i><span>Congès et Absence</span></a></li>
+        <li><a href="{{ path('app_contact_index') }}"><i class="fas fa-headset"></i><span>Contact et Assistance</span></a></li>
+        <li><a href="#positions"><i class="fas fa-file-signature"></i><span>Documents administratifs</span></a></li>
+        <li><a href="#attendance"><i class="fas fa-exclamation-triangle"></i><span>Déclaration des accidents</span></a></li>
+      </ul>
+    </div>
+
+    {% if is_granted('ROLE_MANAGER') %}
+    <div class="menu-section">
+      <h3>Espace direction</h3>
+      <ul>
+        <li><a href="#settings"><i class="fas fa-book-open"></i><span>Demande formations</span></a></li>
+        <li><a href="#logs"><i class="fas fa-user-plus"></i><span>Demande recrutement</span></a></li>
+      </ul>
+    </div>
+    {% endif %}
+{% if is_granted('ROLE_ADMIN') %}
+    <div class="menu-section">
+      <h3>Espace administratifs</h3>
+      <ul>
+        <li><a href="{{ path('app_user_management_index') }}"><i class="fas fa-users"></i><span>Gestion des employées</span></a></li>
+        <li><a href="#settings"><i class="fas fa-dashboard"></i><span>Analyse et reporting</span></a></li>
+        <li><a href="#settings"><i class="fas fa-archive"></i><span>Archive</span></a></li>
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</nav>
+

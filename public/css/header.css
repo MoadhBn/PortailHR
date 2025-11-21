@@ -1,0 +1,369 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Trebuchet MS', 'Lucida Grande', Lucida, sans-serif;
+}
+
+.logo-img {
+  width: 100px;
+}
+
+i[class^="fa"], i[class*=" fa-"] {
+  font-family: "Font Awesome 5 Free"; 
+  font-weight: 900; 
+  display: inline-block;
+  text-align: center;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(220deg, #124E66 0%, #3b676e, rgb(0, 0, 0) 100%);
+  color: white;
+  padding: 2px 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+}
+
+.header-left .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.header-left .logo i {
+  font-size: 17px;
+}
+
+.header-center {
+  flex: 1;
+  max-width: 500px;
+  margin: 0 32px;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.global-search {
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  font-size: 14px;
+  outline: none;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.notification-btn {
+  position: relative;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.notification-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.notification-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.user-dropdown {
+  position: relative;
+}
+
+.user-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.user-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.profile-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 2px;
+  background: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.2s;
+  z-index: 1001;
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu hr {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #f3f4f6;
+}
+
+.dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 16px;
+  color: #374151;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.dropdown-menu a:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.dropdown-menu a:last-child {
+  border-radius: 0 0 8px 8px;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f9fafb;
+}
+
+.dropdown-menu a:last-child {
+  color: #dc2626;
+}
+
+.dropdown-menu form {
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu form button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 16px;
+  color: #dc2626;
+  text-decoration: none;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  transition: background-color 0.2s;
+  border-radius: 0 0 8px 8px;
+}
+
+.dropdown-menu form button:hover {
+  background-color: #f9fafb;
+}
+
+/* MAIN */
+.main-container {
+  display: flex;
+  margin-top: 64px;
+  min-height: calc(100vh - 64px);
+  position: relative;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 64px; /* collapsed */
+  background: black;
+  color: white;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: width 0.4s linear;
+  position: fixed;
+  left: 0;
+  top: 64px; /* below header */
+  bottom: 0;
+  height: calc(100vh - 64px);
+  z-index: 998;
+}
+
+.sidebar:hover {
+  width: 280px; /* expand */
+}
+
+.sidebar-menu {
+  padding: 0px 8px;
+}
+
+.menu-section {
+  margin-bottom: 25px;
+}
+
+.first {
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.menu-section h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  padding: 0 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+
+.sidebar:hover .menu-section h3 {
+  opacity: 1;
+  visibility: visible;
+}
+
+.menu-section ul {
+  list-style: none;
+}
+
+.menu-section li {
+  margin-bottom: 3px;
+  font-size: 15px;
+}
+
+.menu-section a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 10px;
+  color: #d1d5db;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.menu-section a:hover {
+  background-color: #1f2937;
+  color: white;
+}
+
+.menu-section a i {
+  min-width: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.menu-section a span {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+}
+
+.sidebar:hover .menu-section a span {
+  opacity: 1;
+  visibility: visible;
+}
+
+.menu-section a::after {
+  content: "";
+  position: absolute;
+  left: 10px; /* align with padding */
+  bottom: 4px;
+  height: 2px;
+  width: 0;
+  background-color: #77e9fd; /* cyan line */
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+/* Expand underline on hover */
+.menu-section a:hover::after {
+  width: calc(100% - 20px); /* full width minus padding */
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 64px; /* space for collapsed sidebar */
+  transition: margin-left 0.4s linear, width 0.4s linear;
+  min-height: calc(100vh - 64px);
+  overflow-x: auto;
+  width: calc(100% - 64px);
+  box-sizing: border-box;
+  background: #f3f4f6;
+}
+
+/* Active menu item */
+.menu-section a.active {
+  background-color: #1f2937;
+  color: white;
+}
+
+.menu-section a.active::after {
+  width: calc(100% - 20px);
+}
+

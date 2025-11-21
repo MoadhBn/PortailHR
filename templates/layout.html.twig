@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/header.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+    
+    <div class="main-container">
+        {% include 'partials/sidebar.html.twig' %}
+        
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/header.js') }}"></script>
+{% endblock %}
+
+
