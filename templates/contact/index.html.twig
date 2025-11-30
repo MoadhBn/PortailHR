@@ -1,0 +1,248 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Contact et Assistance{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/contact.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <!-- Header -->
+    <header class="contact-header">
+        <div class="container">
+            <h1 class="contact-title">Contact & Assistance RH</h1>
+            <p class="contact-subtitle">Notre équipe est là pour vous accompagner dans vos démarches</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="contact-main">
+        <div class="container">
+            <!-- FAQ Section -->
+            <section class="faq-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h2>Questions Fréquentes</h2>
+                    <p class="section-description">
+                        Consultez nos réponses aux questions les plus courantes. Si vous ne trouvez pas votre réponse, n'hésitez pas à nous contacter.
+                    </p>
+                </div>
+                
+                <div class="faq-card">
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Comment soumettre une demande de congés ?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Connectez-vous à votre espace personnel, accédez à la section 'Congés & Absences', puis cliquez sur 'Nouvelle demande'. Remplissez le formulaire avec les dates souhaitées et soumettez-le pour validation.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Où puis-je consulter mes fiches de paie ?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Vos fiches de paie sont disponibles dans votre espace personnel, rubrique 'Documents'. Elles sont archivées et téléchargeables au format PDF pour les 5 dernières années.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Comment modifier mes informations personnelles ?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Pour toute modification d'informations personnelles (adresse, coordonnées bancaires, situation familiale), veuillez contacter le service RH via le formulaire de contact ou par email à Assistance@denim-authority.tn.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Quel est le délai de traitement d'une demande ?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Nous nous engageons à traiter toutes les demandes sous 48 heures ouvrées. Pour les demandes urgentes, n'hésitez pas à nous contacter par téléphone.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Messages Management Section (Managers/Admins only) -->
+           
+            <section class="messages-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Gestion des Messages</h2>
+                        <p class="section-description">Consultez et gérez tous les messages reçus via le formulaire de contact</p>
+                    </div>
+                    <div class="filter-controls">
+                        <i class="fas fa-filter"></i>
+                        <select id="statusFilter" class="status-filter" onchange="filterMessages()">
+                            <option value="all">Tous les messages</option>
+                            <option value="new">Nouveaux</option>
+                            <option value="reviewed">Consultés</option>
+                            <option value="archived">Archivés</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="messages-card">
+                    <div class="messages-table-container">
+                        <table class="messages-table">
+                            <thead>
+                                <tr>
+                                    <th>Statut</th>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Sujet</th>
+                                    <th>Date</th>
+                                    <th class="text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="messagesTableBody">
+                                <tr>
+                                    <td colspan="6" class="text-center">
+                                        <p class="loading">Chargement des messages...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <!-- Contact Form and Info Section -->
+            <section class="contact-form-section">
+                <div class="contact-grid">
+                    <!-- Contact Form -->
+                    <div class="contact-form-wrapper">
+                        <h2>Envoyez-nous un message</h2>
+                        <p class="form-description">
+                            Remplissez le formulaire ci-dessous et notre équipe vous répondra dans les meilleurs délais.
+                        </p>
+                        
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <label for="contact-name">Nom complet *</label>
+                                <input type="text" id="contact-name" name="name" required placeholder="Foulen Fouleni">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-email">Email professionnel *</label>
+                                <input type="email" id="contact-email" name="email" required placeholder="Foulen.Fouleni@denim-authority.tn">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-subject">Sujet *</label>
+                                <input type="text" id="contact-subject" name="subject" required placeholder="Objet de votre demande">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-message">Message *</label>
+                                <textarea id="contact-message" name="message" required placeholder="Décrivez votre demande en détail..." rows="6"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit-message">
+                                <i class="fas fa-paper-plane"></i>
+                                Envoyer le message
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="contact-info-wrapper">
+                        <div class="contact-info-card">
+                            <h3>Informations de contact</h3>
+                            
+                            <div class="contact-info-list">
+                                <div class="contact-info-item">
+                                    <div class="contact-info-icon contact-info-icon-primary">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <h4>Email</h4>
+                                        <p>Assistance@denim-authority.tn</p>
+                                    </div>
+                                </div>
+
+                                <div class="contact-info-item">
+                                    <div class="contact-info-icon contact-info-icon-secondary">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <h4>Téléphone</h4>
+                                        <p>+216 90 113 950</p>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+
+                            <div class="response-time-info">
+                                <p>
+                                    <strong>Temps de réponse moyen :</strong><br>
+                                    Nous nous engageons à répondre à toutes vos demandes sous 48 heures ouvrées.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+
+<!-- View Message Modal (Managers/Admins only) -->
+<div id="viewMessageModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="viewMessageSubject"></h2>
+            <button class="close-btn" onclick="closeViewMessageModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="message-details">
+                <p><strong>De:</strong> <span id="viewMessageName"></span> (<span id="viewMessageEmail"></span>)</p>
+                <p><strong>Date:</strong> <span id="viewMessageDate"></span></p>
+            </div>
+            <div class="message-content">
+                <p id="viewMessageContent"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteMessageModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h2>Confirmer la suppression</h2>
+        <p id="deleteMessageText"></p>
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+            <button type="button" class="btn-cancel" onclick="closeDeleteMessageModal()" style="background:rgba(41, 40, 40, 0.57); width: auto;">Annuler</button>
+            <button type="button" class="btn-submit" id="confirmDeleteMessageBtn" style="background: #f44336; width: auto;">Supprimer</button>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/contact.js') }}"></script>
+{% endblock %}
+
+
+
+
+
+
