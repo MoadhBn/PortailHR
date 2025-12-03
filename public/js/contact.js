@@ -389,4 +389,3 @@ document.addEventListener('keydown', function(event) {
         closeDeleteMessageModal();
     }
 });
-

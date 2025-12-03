@@ -1,0 +1,204 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <!-- Header -->
+    <header class="home-header">
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1 class="home-title">Portail RH</h1>
+                    <p class="home-subtitle">Bon retour ! Voici votre aperçu</p>
+                </div>
+                <div class="date-display">
+                    <span id="currentDate"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="home-main">
+        <div class="container">
+            <!-- Stats Cards -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stats-card stats-card-primary">
+                        <div class="stats-content">
+                            <p class="stats-label">Total Utilisateurs</p>
+                            <h3 class="stats-value">{{ stats.totalUsers }}</h3>
+                        </div>
+                        <div class="stats-icon stats-icon-primary">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stats-card stats-card-success">
+                        <div class="stats-content">
+                            <p class="stats-label">Employés Actifs</p>
+                            <h3 class="stats-value">{{ stats.activeEmployees }}</h3>
+                        </div>
+                        <div class="stats-icon stats-icon-success">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                    </div>
+                    <div class="stats-card stats-card-warning">
+                        <div class="stats-content">
+                            <p class="stats-label">Demandes en Attente</p>
+                            <h3 class="stats-value">{{ stats.pendingRequests }}</h3>
+                        </div>
+                        <div class="stats-icon stats-icon-warning">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Calendar Section -->
+            <section class="calendar-section">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-calendar-days"></i>
+                        <h2>Événements à Venir</h2>
+                        {% if isManagerOrAdmin %}
+                        <button class="btn-add-event" onclick="openAddEventModal()" title="Ajouter un Événement">
+                            <i class="fas fa-plus"></i> Ajouter un Événement
+                        </button>
+                        {% endif %}
+                    </div>
+                    <div class="calendar-content">
+                        <div class="calendar-wrapper">
+                            <div id="calendar"></div>
+                        </div>
+                        <div class="events-list">
+                            <h3 id="events-list-title">Select a date to view events</h3>
+                            <div id="events-list-content">
+                                <p class="no-events">No events selected.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Documents Section -->
+            <section class="documents-section">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-file-text"></i>
+                        <h2>Documents Importants</h2>
+                        {% if isManagerOrAdmin %}
+                        <button class="btn-upload-document" onclick="openUploadDocumentModal()" title="Télécharger un Document">
+                            <i class="fas fa-upload"></i> Télécharger un PDF
+                        </button>
+                        {% endif %}
+                    </div>
+                    <div class="documents-content" id="documents-list">
+                        <p class="loading">Loading documents...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+
+<!-- Add Event Modal -->
+{% if isManagerOrAdmin %}
+<div id="addEventModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Ajouter un Événement</h2>
+            <button class="close-btn" onclick="closeAddEventModal()">&times;</button>
+        </div>
+        <form id="addEventForm" class="modal-form">
+            <div class="form-group">
+                <label for="event-title">Titre *</label>
+                <input type="text" id="event-title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="event-date">Date *</label>
+                <input type="datetime-local" id="event-date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="event-location">Lieu</label>
+                <input type="text" id="event-location" name="location">
+            </div>
+            <div class="form-group">
+                <label for="event-type">Type *</label>
+                <select id="event-type" name="type" required>
+                    <option value="meeting">Réunion</option>
+                    <option value="holiday">Jour Férié</option>
+                    <option value="training">Formation</option>
+                    <option value="other">Autre</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeAddEventModal()">Annuler</button>
+                <button type="submit" class="btn-submit">Ajouter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Upload Document Modal -->
+<div id="uploadDocumentModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Télécharger un Document</h2>
+            <button class="close-btn" onclick="closeUploadDocumentModal()">&times;</button>
+        </div>
+        <form id="uploadDocumentForm" class="modal-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="document-title">Titre *</label>
+                <input type="text" id="document-title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="document-category">Catégorie</label>
+                <select id="document-category" name="category">
+                    <option value="Policy">Politique</option>
+                    <option value="Benefits">Avantages</option>
+                    <option value="Safety">Sécurité</option>
+                    <option value="Training">Formation</option>
+                    <option value="General">Général</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="document-file">Fichier PDF *</label>
+                <input type="file" id="document-file" name="file" accept="application/pdf,.pdf" required>
+                <small>Taille maximale du fichier : 10 Mo</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeUploadDocumentModal()">Annuler</button>
+                <button type="submit" class="btn-submit">Télécharger</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h2>Confirmer la suppression</h2>
+        <p id="deleteMessage"></p>
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+            <button type="button" class="btn-cancel" onclick="closeDeleteModal()" style="background:rgba(41, 40, 40, 0.57); width: auto;">Annuler</button>
+            <button type="button" class="btn-submit" id="confirmDeleteBtn" style="background: #f44336; width: auto;">Supprimer</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const isManagerOrAdmin = {{ isManagerOrAdmin ? 'true' : 'false' }};
+</script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/home.js') }}"></script>
+{% endblock %}
