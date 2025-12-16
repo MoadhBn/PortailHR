@@ -1,0 +1,113 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Organigramme{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/organigramme.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="organigramme-container">
+    <div class="organigramme-header">
+        <h1>Organigramme</h1>
+    </div>
+
+    <div class="organigramme-layout">
+        {% if is_granted('ROLE_ADMIN') %}
+        <!-- Employee Form Sidebar - Only visible to admins -->
+        <div class="organigramme-sidebar">
+            <div class="form-card">
+                <div class="form-card-header">
+                    <h2>Ajouter un Employé</h2>
+                </div>
+                <div class="form-card-content">
+                    <form id="employeeForm" class="employee-form">
+                        <div class="form-group">
+                            <label for="lastName">Nom</label>
+                            <input type="text" id="lastName" name="lastName"  required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="firstName">Prénom</label>
+                            <input type="text" id="firstName" name="firstName"  required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="tel" id="phone" name="phone"  required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="position">Poste</label>
+                            <input type="text" id="position" name="position" placeholder="Directeur Marketing" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="department">Département</label>
+                            <input type="text" id="department" name="department" placeholder="Marketing" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="superior">Supérieur hiérarchique</label>
+                            <select id="superior" name="superiorId">
+                                <option value="">Aucun (Direction)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-add-employee">
+                            <i class="fas fa-plus"></i>
+                            Ajouter à l'organigramme
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Organization Tree -->
+        <div class="organigramme-main" {% if not is_granted('ROLE_ADMIN') %}style="grid-column: 1 / -1;"{% endif %}>
+            <div id="organizationTree" class="organization-tree">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Organigramme vide</h3>
+                    <p>Commencez à construire votre organigramme en ajoutant des employés via le formulaire à gauche.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Employee Modal -->
+<div id="employeeModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">Détails de l'employé</h2>
+            <button class="close" onclick="closeEmployeeModal()">&times;</button>
+        </div>
+        <div id="modalBody" class="modal-body">
+            <!-- Content will be loaded dynamically -->
+        </div>
+        <div id="modalFooter" class="modal-footer">
+            <!-- Buttons will be loaded dynamically -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Pass user role to JavaScript
+        const isAdmin = {{ is_granted('ROLE_ADMIN') ? 'true' : 'false' }};
+    </script>
+    <script src="{{ asset('js/organigramme.js') }}"></script>
+{% endblock %}
+
